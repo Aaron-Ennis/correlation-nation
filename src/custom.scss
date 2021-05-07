@@ -1,0 +1,63 @@
+@import "~bootstrap/scss/bootstrap.scss";
+/* Color Variables */
+$dark-bg: #3b5249; // Dark Slate Gray
+$med-bg: #519872; // Russian Green
+$light-bg: #a4b494; // Laurel Green Medium
+$dark-text: #34252f; // Black Coffee
+$light-text: #bec5ad; // Laurel Green Light
+
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Source Sans Pro", "Ubuntu",
+		"Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
+}
+
+@media (max-width: 767px) {
+	.app-info {
+		text-align: center;
+		max-height: 170px !important;
+	}
+}
+
+.main {
+	text-align: center;
+}
+
+.app {
+	background-color: $dark-bg;
+	min-height: 100vh;
+	color: white;
+}
+
+.app-info {
+	max-width: 650px;
+}
+
+.info-icon {
+	font-size: large;
+	cursor: pointer;
+}
+
+/* Bootstrap overrides */
+
+.card {
+	background-color: inherit;
+	border: none;
+}
+
+.card-header {
+	background-color: inherit;
+	border: none;
+	padding: 0.75rem 0;
+}
+
+.card-body {
+	padding: 0 1.25rem;
+}

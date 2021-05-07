@@ -1,8 +1,9 @@
+import Title from "../title";
 
 function Main() {
   return (
-    <div className="app">
-      <header className="main-header">App Goes Here!</header>
+    <div className="app pt-4 d-flex justify-content-center">
+      <Title />
     </div>
   );
 }
