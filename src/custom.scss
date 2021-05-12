@@ -20,14 +20,10 @@ code {
 }
 
 @media (max-width: 767px) {
-	.app-info {
+	.title-info {
 		text-align: center;
 		max-height: 170px !important;
 	}
-}
-
-.main {
-	text-align: center;
 }
 
 .app {
@@ -36,13 +32,38 @@ code {
 	color: white;
 }
 
-.app-info {
+.title-info {
+	max-width: 650px;
+}
+
+.main {
 	max-width: 650px;
 }
 
 .info-icon {
 	font-size: large;
 	cursor: pointer;
+	padding-left: 0.5rem;
+}
+
+.graph-container {
+	margin-left: -50px;
+	margin-top: 50px;
+}
+
+.tooltip-custom {
+	background-color: #519872;
+	border: 1px solid #999;
+	margin: 0;
+	padding: 10px;
+}
+
+.tooltip-country {
+	font-size: larger;
+}
+
+.country-flag {
+	margin-left: 10px;
 }
 
 /* Bootstrap overrides */
@@ -60,4 +81,43 @@ code {
 
 .card-body {
 	padding: 0 1.25rem;
+}
+
+.stat-select {
+	color: $dark-text;
+}
+
+.control-label {
+	font-size: larger;
+	max-width: 150px;
+}
+
+.control-select {
+	max-width: 450px;
+}
+
+.btn {
+	&.btn-primary {
+		background-color: $med-bg;
+		border-color: $med-bg;
+	}
+
+	&.disabled,
+	&:disabled {
+		background-color: $light-text;
+		border-color: $light-text;
+		color: $med-bg;
+		cursor: not-allowed;
+		pointer-events: all !important;
+	}
+}
+
+.btn-primary:hover,
+.btn-primary.hover,
+.btn:hover,
+.btn.hover {
+	box-shadow: none;
+	background-color: $light-bg;
+	border-color: $light-bg;
+	color: $dark-text;
 }

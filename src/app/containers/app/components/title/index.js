@@ -11,7 +11,7 @@ function Title() {
               <Accordion.Toggle
                 className="d-flex justify-content-center"
                 as={Card.Header}
-                eventKey="app-info"
+                eventKey="title-info"
               >
                 <div className="d-flex align-items-center">
                   <h1 className="mb-1 mt-4">Correlation Nation</h1>
@@ -20,11 +20,11 @@ function Title() {
                   </div>
                 </div>
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey="app-info">
-                <Card.Body className="app-info mb-3">
+              <Accordion.Collapse eventKey="title-info">
+                <Card.Body className="title-info mb-3">
                   This app displays a pair of national statistics for many
                   countries on a scatter-plot graph. It is useful for showing
-                  correlation between national-level statistics. But remember:
+                  correlation between country-level statistics. But remember:
                   correlation does not mean causation!
                 </Card.Body>
               </Accordion.Collapse>

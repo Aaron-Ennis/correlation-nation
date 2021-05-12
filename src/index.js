@@ -2,6 +2,6 @@ import React from "react";
 import { render } from "react-dom";
 import "./custom.scss";
 //import "bootstrap/dist/css/bootstrap.min.css";
-import Main from "./app/containers/main";
+import App from "./app/containers/app";
 
-render(<Main />, document.getElementById("root"));
+render(<App />, document.getElementById("root"));
