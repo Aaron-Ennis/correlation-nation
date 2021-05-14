@@ -4,6 +4,7 @@ import StatControlOne from "./components/controls/stat_control_one";
 import StatControlTwo from "./components/controls/stat_control_two";
 import CountryControl from "./components/controls/country_control";
 import { getData } from "../../../../../utils/getData";
+import { processPage } from "../../../../../api";
 import Graph from "./components/graph";
 
 function Main() {
@@ -12,6 +13,7 @@ function Main() {
   const [graphData, setGraphData] = useState(null);
   const [dataPoints, setDataPoints] = useState(null);
   const [show, setShow] = useState(false);
+  const [parsedData, setParsedData] = useState(null);
 
   useEffect(() => {
     if (statOne && statTwo) {
@@ -27,6 +29,8 @@ function Main() {
 
   async function handleStatOneChange(selection) {
     setStatOne(selection);
+    let data = await processPage()
+    setParsedData(data);
   }
 
   function handleStatTwoChange(selection) {
