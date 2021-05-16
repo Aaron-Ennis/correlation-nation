@@ -1,22 +1,7 @@
 import axios from "axios";
 import { parse } from "node-html-parser";
 
-export async function getPage() {
-  const grandPrix = "1976_Spanish_Grand_Prix";
-  const countries =
-    "List_of_countries_by_past_and_projected_GDP_(nominal)_per_capita";
-
-  try {
-    const response = await axios.get(
-      "https://en.wikipedia.org/api/rest_v1/page/html/" + grandPrix
-    );
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export async function processPage() {
+export async function parseWiki(url) {
   // Set up the shape of the response
   let structuredData = {
     headings: [],
@@ -24,9 +9,24 @@ export async function processPage() {
     linksText: [],
     tables: [],
   };
-  // Set up regex test for any inner HTML for removal
-  // Get the page and parse it
-  let pageTextHtml = await getPage();
+  let pageTextHtml;
+  // We only want the last part of the URL so that we can access it
+  // using the Wikipedia REST API
+  const page = url.substring(url.lastIndexOf("/"));
+
+  // Get the page data
+  try {
+    // Use the Wikipedia REST API to get the page
+    const response = await axios.get(
+      "https://en.wikipedia.org/api/rest_v1/page/html" + page
+    );
+    pageTextHtml = response.data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+
+  // Parse the page data
   let parsedHtml = await parse(pageTextHtml);
 
   // Get the paragraphs from the page
@@ -109,4 +109,20 @@ export async function processPage() {
   });
 
   return structuredData;
+}
+
+async function getPage(url) {
+  const grandPrix = "1976_Spanish_Grand_Prix";
+  const countries =
+    "List_of_countries_by_past_and_projected_GDP_(nominal)_per_capita";
+
+  try {
+    const response = await axios.get(
+      "https://en.wikipedia.org/api/rest_v1/page/htm/" + grandPrix
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
 }

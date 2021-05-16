@@ -4,7 +4,7 @@ import StatControlOne from "./components/controls/stat_control_one";
 import StatControlTwo from "./components/controls/stat_control_two";
 import CountryControl from "./components/controls/country_control";
 import { getData } from "../../../../../utils/getData";
-import { processPage } from "../../../../../api";
+import { parseWiki } from "../../../../../api";
 import Graph from "./components/graph";
 
 function Main() {
@@ -29,7 +29,9 @@ function Main() {
 
   async function handleStatOneChange(selection) {
     setStatOne(selection);
-    let data = await processPage()
+    let data = await parseWiki(
+      "https://en.wikipedia.org/wiki/List_of_countries_by_past_and_projected_GDP_(nominal)_per_capita"
+    );
     setParsedData(data);
   }
 
@@ -116,7 +118,9 @@ function Main() {
           </div>
 
           <div className="justify-content-center m-2">
-            <Button disabled={!graphData} onClick={swapAxis}>Swap Axis</Button>
+            <Button disabled={!graphData} onClick={swapAxis}>
+              Swap Axis
+            </Button>
           </div>
         </div>
         {dataPoints && (
