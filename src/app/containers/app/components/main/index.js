@@ -12,23 +12,32 @@ function Main() {
   const [statOneData, setStatOneData] = useState(null);
   const [statTwo, setStatTwo] = useState(null);
   const [statTwoData, setStatTwoData] = useState(null);
-  const [graphData, setGraphData] = useState(null);
-  const [dataPoints, setDataPoints] = useState(null);
-  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (statOneData && statTwoData) {
+      _processYears();
+    }
+  }, [statOneData, statTwoData]);
+
   const [years, setYears] = useState(null);
   const [currentYear, setCurrentYear] = useState(null);
 
   useEffect(() => {
-    if (statOneData && statTwoData) {
+    if (currentYear) {
       processData();
     }
-  }, [statOneData, statTwoData]);
+  }, [currentYear]);
+
+  const [graphData, setGraphData] = useState(null);
+  const [dataPoints, setDataPoints] = useState(null);
 
   useEffect(() => {
     if (graphData) {
       setDataPoints(graphData.graphData);
     }
   }, [graphData]);
+
+  const [show, setShow] = useState(false);
 
   async function handleStatOneChange(selection) {
     setStatOne(selection);
@@ -47,7 +56,33 @@ function Main() {
   }
 
   function processData() {
-    _processYears();
+    let tableOne;
+    let tableTwo;
+    let data = { units: { x: "", y: "" }, graphData: [] };
+    statOneData.tables.forEach((table) => {
+      if (table.year === currentYear.value) {
+        tableOne = table.data;
+      }
+    });
+    statTwoData.tables.forEach((table) => {
+      if (table.year === currentYear.value) {
+        tableTwo = table.data;
+      }
+    });
+    data.units.x = statOneData.units;
+    data.units.y = statTwoData.units;
+    tableOne.forEach((xElement) => {
+      tableTwo.forEach((yElement) => {
+        if (xElement.country === yElement.country) {
+          let graphPoint = {};
+          graphPoint.country = xElement.country;
+          graphPoint.x = xElement.value;
+          graphPoint.y = yElement.value;
+          data.graphData.push(graphPoint);
+        }
+      });
+    });
+    setGraphData(data);
   }
 
   function _processYears() {

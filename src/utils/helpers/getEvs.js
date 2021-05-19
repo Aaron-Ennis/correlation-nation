@@ -11,7 +11,6 @@ export async function getEvs() {
   // EV market share is in the fourth table
   let rawTable = response.data.tables[3];
   let yearRow = rawTable.rows[0].row;
-  console.log(rawTable);
   for (let i = 1; i < yearRow.length; i++) {
     let newTable = {
       year: parseInt(yearRow[i].value.match(/\b\d{4}\b/)),
