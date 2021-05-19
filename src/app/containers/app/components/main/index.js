@@ -3,23 +3,26 @@ import { Button } from "react-bootstrap";
 import StatControlOne from "./components/controls/stat_control_one";
 import StatControlTwo from "./components/controls/stat_control_two";
 import CountryControl from "./components/controls/country_control";
+import YearControl from "./components/controls/year_control";
 import { getData } from "../../../../../utils/getData";
-import { parseWiki } from "../../../../../api";
 import Graph from "./components/graph";
 
 function Main() {
   const [statOne, setStatOne] = useState(null);
+  const [statOneData, setStatOneData] = useState(null);
   const [statTwo, setStatTwo] = useState(null);
+  const [statTwoData, setStatTwoData] = useState(null);
   const [graphData, setGraphData] = useState(null);
   const [dataPoints, setDataPoints] = useState(null);
   const [show, setShow] = useState(false);
-  const [parsedData, setParsedData] = useState(null);
+  const [years, setYears] = useState(null);
+  const [currentYear, setCurrentYear] = useState(null);
 
   useEffect(() => {
-    if (statOne && statTwo) {
-      setGraphData(getData(statOne.value, statTwo.value));
+    if (statOneData && statTwoData) {
+      processData();
     }
-  }, [statOne, statTwo]);
+  }, [statOneData, statTwoData]);
 
   useEffect(() => {
     if (graphData) {
@@ -29,21 +32,53 @@ function Main() {
 
   async function handleStatOneChange(selection) {
     setStatOne(selection);
-    let data = await parseWiki(
-      "https://en.wikipedia.org/wiki/List_of_countries_by_past_and_projected_GDP_(nominal)_per_capita"
-    );
-    setParsedData(data);
+    let data = await getData(selection.value);
+    setStatOneData(data);
   }
 
-  function handleStatTwoChange(selection) {
+  async function handleStatTwoChange(selection) {
     setStatTwo(selection);
+    let data = await getData(selection.value);
+    setStatTwoData(data);
+  }
+
+  function handleYearChange(selection) {
+    setCurrentYear(selection);
+  }
+
+  function processData() {
+    _processYears();
+  }
+
+  function _processYears() {
+    let list = [];
+    statOneData.tables.forEach((tableOne) => {
+      statTwoData.tables.forEach((tableTwo) => {
+        if (tableOne.year === tableTwo.year) {
+          let newYear = { value: tableOne.year, label: tableOne.year };
+          list.push(newYear);
+        }
+      });
+    });
+    if (list.length === 0) {
+      alert("No matching years found. Please select different stats.");
+      setCurrentYear(null);
+    } else {
+      setYears(list);
+      // Set the year to the most current year common to the two stats
+      setCurrentYear(list[list.length - 1]);
+    }
   }
 
   function resetStats() {
     setStatOne(null);
+    setStatOneData(null);
     setStatTwo(null);
+    setStatTwoData(null);
     setGraphData(null);
     setDataPoints(null);
+    setCurrentYear(null);
+    setYears(null);
   }
 
   function swapAxis() {
@@ -99,7 +134,21 @@ function Main() {
             <StatControlTwo
               selection={statTwo}
               selectionChange={handleStatTwoChange}
-              disabled={!statOne}
+              disabled={!statOneData}
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3 align-items-center">
+          <div className="col d-flex control-label justify-content-end">
+            Year:
+          </div>
+          <div className="col control-select">
+            <YearControl
+              selection={currentYear}
+              selectionChange={handleYearChange}
+              disabled={!years}
+              years={years ? years : []}
             />
           </div>
         </div>

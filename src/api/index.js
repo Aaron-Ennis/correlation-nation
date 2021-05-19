@@ -110,19 +110,3 @@ export async function parseWiki(url) {
 
   return structuredData;
 }
-
-async function getPage(url) {
-  const grandPrix = "1976_Spanish_Grand_Prix";
-  const countries =
-    "List_of_countries_by_past_and_projected_GDP_(nominal)_per_capita";
-
-  try {
-    const response = await axios.get(
-      "https://en.wikipedia.org/api/rest_v1/page/htm/" + grandPrix
-    );
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
-}
