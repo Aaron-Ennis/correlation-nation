@@ -118,8 +118,8 @@ function Main() {
 
   function swapAxis() {
     let temp = statOne;
-    setStatOne(statTwo);
-    setStatTwo(temp);
+    handleStatOneChange(statTwo);
+    handleStatTwoChange(temp);
   }
 
   function handleShow() {

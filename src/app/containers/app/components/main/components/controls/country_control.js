@@ -12,14 +12,13 @@ const propTypes = {
 function CountryControl(props) {
   const { show, handleClose, graphData, selectedData, handleSelection } = props;
   return (
-    <Modal show={show}>
+    <Modal show={show} size="lg">
       <Modal.Header>
         <Modal.Title>Country Selection</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <p>Modal body text goes here</p>
-        <div className="d-flex-column">
+        <div className="d-flex flex-wrap">
           {graphData &&
             selectedData &&
             graphData.graphData.map((element) => {
@@ -29,7 +28,7 @@ function CountryControl(props) {
               return (
                 <div
                   key={element.country}
-                  className="d-flex flex-grow-1 align-items-center"
+                  className="d-flex flex-grow-1 align-items-center country-select"
                   onClick={() => handleSelection(element.country, isSelected)}
                 >
                   <i
@@ -39,7 +38,7 @@ function CountryControl(props) {
                         : "m-1 far fa-square"
                     }
                   />{" "}
-                  {element.country}
+                  <span className="text-truncate">{element.country}</span>
                   <img
                     className="m-1"
                     src="/assets/flag.png"
