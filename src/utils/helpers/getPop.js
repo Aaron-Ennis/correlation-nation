@@ -27,7 +27,10 @@ export async function getPop() {
       if (rawTable.rows[j].row[i] !== "") {
         let country = rawTable.rows[j].row[0].value;
         let newEntry = {
-          country: country.trim().replace(/ *\[[^\]]*]/g, ""),
+          country: country
+            .replace(/ *\[[^\]]*]/g, "")
+            .replace(/[^\w\s]/gi, "")
+            .trim(),
           value: parseInt(rawTable.rows[j].row[i].value.replaceAll(",", "")),
         };
         // Push the country entry into the data array for the year

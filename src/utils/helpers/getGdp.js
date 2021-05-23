@@ -23,7 +23,8 @@ export async function getGdp() {
       if (rawTable.rows[j].row[i] !== "") {
         let country = rawTable.rows[j].row[0].value;
         let newEntry = {
-          country: country.substring(0, country.length - 1).trim(),
+          country: country.replace(/[^\w\s]/gi, '').trim(),
+          //country: country.substring(0, country.length - 1).trim(),
           value: parseInt(rawTable.rows[j].row[i].value.replaceAll(",", "")),
         };
         // Push the country entry into the data array for the year

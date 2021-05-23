@@ -6,6 +6,7 @@ import CountryControl from "./components/controls/country_control";
 import YearControl from "./components/controls/year_control";
 import { getData } from "../../../../../utils/getData";
 import Graph from "./components/graph";
+import { StatList } from "./components/controls/stat_list";
 
 function Main() {
   const [statOne, setStatOne] = useState(null);
@@ -15,8 +16,9 @@ function Main() {
 
   useEffect(() => {
     if (statOneData && statTwoData) {
-      _processYears();
+      processYears();
     }
+    // eslint-disable-next-line
   }, [statOneData, statTwoData]);
 
   const [years, setYears] = useState(null);
@@ -26,6 +28,7 @@ function Main() {
     if (currentYear) {
       processData();
     }
+    // eslint-disable-next-line
   }, [currentYear]);
 
   const [graphData, setGraphData] = useState(null);
@@ -85,7 +88,7 @@ function Main() {
     setGraphData(data);
   }
 
-  function _processYears() {
+  function processYears() {
     let list = [];
     statOneData.tables.forEach((tableOne) => {
       statTwoData.tables.forEach((tableTwo) => {
@@ -120,6 +123,18 @@ function Main() {
     let temp = statOne;
     handleStatOneChange(statTwo);
     handleStatTwoChange(temp);
+  }
+
+  async function randomize() {
+    resetStats();
+    let randomStatOne = Math.floor(Math.random() * StatList.length);
+    let randomStatTwo;
+    do {
+      randomStatTwo = Math.floor(Math.random() * StatList.length);
+    } while (randomStatTwo === randomStatOne);
+
+    await handleStatOneChange(StatList[randomStatOne]);
+    await handleStatTwoChange(StatList[randomStatTwo]);
   }
 
   function handleShow() {
@@ -199,6 +214,10 @@ function Main() {
         <div className="d-flex mb-3 justify-content-center">
           <div className="justify-content-center m-2">
             <Button onClick={resetStats}>Reset</Button>
+          </div>
+
+          <div className="justify-content-center m-2">
+            <Button onClick={randomize}>Random</Button>
           </div>
 
           <div className="justify-content-center m-2">
