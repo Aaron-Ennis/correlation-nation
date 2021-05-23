@@ -9,6 +9,7 @@ import Graph from "./components/graph";
 import { StatList } from "./components/controls/stat_list";
 
 function Main() {
+
   const [statOne, setStatOne] = useState(null);
   const [statOneData, setStatOneData] = useState(null);
   const [statTwo, setStatTwo] = useState(null);
