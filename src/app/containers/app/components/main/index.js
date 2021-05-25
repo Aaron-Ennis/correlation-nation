@@ -4,6 +4,7 @@ import StatControlOne from "./components/controls/stat_control_one";
 import StatControlTwo from "./components/controls/stat_control_two";
 import CountryControl from "./components/controls/country_control";
 import YearControl from "./components/controls/year_control";
+import RequestStat from "./components/controls/request_stat";
 import { getData } from "../../../../../utils/getData";
 import { getFlags } from "../../../../../utils/getFlags";
 import Graph from "./components/graph";
@@ -42,6 +43,8 @@ function Main() {
   }, [graphData]);
 
   const [show, setShow] = useState(false);
+  const [showRequest, setShowRequest] = useState(false);
+  const [requestText, setRequestText] = useState("");
 
   async function handleStatOneChange(selection) {
     setStatOne(selection);
@@ -147,6 +150,14 @@ function Main() {
     setShow(false);
   }
 
+  function toggleShowRequest() {
+    setShowRequest(!showRequest);
+  }
+
+  function handleTextChange(input) {
+    setRequestText(input);
+  }
+
   function handleSelection(country, isSelected) {
     // If it's selected, we're going to remove that country entry
     // from the list of data points on the graph
@@ -227,7 +238,18 @@ function Main() {
               Swap Axis
             </Button>
           </div>
+
+          <div className="justify-content-center m-2">
+            <Button onClick={toggleShowRequest}>Request New Stat</Button>
+          </div>
         </div>
+        {showRequest && (
+          <RequestStat
+            requestText={requestText}
+            onTextChange={handleTextChange}
+            toggleShowRequest={toggleShowRequest}
+          />
+        )}
         {dataPoints && (
           <Graph
             dataPoints={dataPoints}
