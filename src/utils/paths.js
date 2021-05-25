@@ -1,4 +1,5 @@
 export const apiPath = "https://api.aaronennis.com/wiki-parser/";
+export const getFlagsPath = "https://api.aaronennis.com/get-flags";
 
 export const gdpPath =
   "https://en.wikipedia.org/wiki/List_of_countries_by_past_and_projected_GDP_(nominal)_per_capita";

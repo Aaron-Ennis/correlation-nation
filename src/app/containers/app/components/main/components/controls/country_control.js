@@ -25,6 +25,10 @@ function CountryControl(props) {
               let isSelected = selectedData.find(
                 (selected) => element.country === selected.country
               );
+              let imgSrc =
+                "https://api.aaronennis.com/flags/" +
+                element.country.replace(" ", "_") +
+                ".png";
               return (
                 <div
                   key={element.country}
@@ -39,11 +43,7 @@ function CountryControl(props) {
                     }
                   />{" "}
                   <span className="text-truncate">{element.country}</span>
-                  <img
-                    className="m-1"
-                    src="/assets/flag.png"
-                    alt="Country Flag"
-                  />
+                  <img className="m-1" src={imgSrc} alt="Flag" />
                 </div>
               );
             })}

@@ -22,12 +22,16 @@ function Graph(props) {
       const country = payload[0].payload.country;
       const statOne = payload[0];
       const statTwo = payload[1];
+      const imgSrc =
+        "https://api.aaronennis.com/flags/" +
+        country.replace(" ", "_") +
+        ".png";
       return (
         <div className="tooltip-custom">
           <div className="d-flex">
             <p className="tooltip-country">{country}</p>
             <div className="country-flag">
-              <img src="/assets/flag.png" alt="Country Flag"/>
+              <img src={imgSrc} alt="Country Flag" />
             </div>
           </div>
           <hr />

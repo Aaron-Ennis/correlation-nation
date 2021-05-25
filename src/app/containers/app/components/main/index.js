@@ -5,11 +5,11 @@ import StatControlTwo from "./components/controls/stat_control_two";
 import CountryControl from "./components/controls/country_control";
 import YearControl from "./components/controls/year_control";
 import { getData } from "../../../../../utils/getData";
+import { getFlags } from "../../../../../utils/getFlags";
 import Graph from "./components/graph";
 import { StatList } from "./components/controls/stat_list";
 
 function Main() {
-
   const [statOne, setStatOne] = useState(null);
   const [statOneData, setStatOneData] = useState(null);
   const [statTwo, setStatTwo] = useState(null);
@@ -86,6 +86,7 @@ function Main() {
         }
       });
     });
+    //getFlags(data.graphData);
     setGraphData(data);
   }
 
