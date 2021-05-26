@@ -1,3 +1,7 @@
+/*
+ *  This is a container file that represents the top-level of the
+ *  React app component tree.
+ */
 import Title from "./components/title";
 import Main from "./components/main";
 

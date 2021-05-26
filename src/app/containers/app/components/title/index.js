@@ -1,3 +1,9 @@
+/*
+ *  Component Name:  Title
+ *     Description:  This component renders the title and an information card
+ *                   about the application using a bootstrap Accordion 
+ *                   component so it can collapse and expand as needed.
+ */
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 

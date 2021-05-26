@@ -1,3 +1,4 @@
+// This file simple exports the stat list as an array of objects
 export const StatList = [
   { value: "gdp", label: "GDP (per capita)" },
   { value: "pop", label: "Population" },

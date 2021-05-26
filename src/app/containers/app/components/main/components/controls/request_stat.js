@@ -1,3 +1,10 @@
+/*
+ *  Component Name:  RequestStat
+ *     Description:  This component renders the form control for requesting a
+ *                   new statistic to be added to the app. This is a controlled
+ *                   component, and the text for the input field is held in a
+ *                   state variable in the parent component.
+ */
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 
@@ -10,10 +17,13 @@ const propTypes = {
 function RequestStat(props) {
   const { requestText, onTextChange, toggleShowRequest } = props;
 
+  // Event handler that uses a control function from the parent function to
+  // keep the input field text as a state variable in that parent component.
   function handleChange(event) {
     onTextChange(event.target.value);
   }
 
+  // Use the mailto html functionality to send the request
   function submitStat() {
     let subject = encodeURIComponent("Correlation Nation Stat Request");
     let body = encodeURIComponent(requestText);

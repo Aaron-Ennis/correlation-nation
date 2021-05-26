@@ -1,3 +1,8 @@
+/*
+ *  Component Name:  Graph
+ *     Description:  This component renders the graph using components from
+ *                   the "recharts" library.
+ */
 import {
   ScatterChart,
   Scatter,

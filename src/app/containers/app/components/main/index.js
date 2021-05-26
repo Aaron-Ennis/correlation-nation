@@ -1,3 +1,9 @@
+/*
+ *  Component Name:  Main
+ *     Description:  This component renders the bulk of the application
+ *                   and contains most of the logic through controlled
+ *                   components.
+ */
 import { useEffect, useState, Fragment } from "react";
 import { Button } from "react-bootstrap";
 import StatControlOne from "./components/controls/stat_control_one";
@@ -16,6 +22,8 @@ function Main() {
   const [statTwo, setStatTwo] = useState(null);
   const [statTwoData, setStatTwoData] = useState(null);
 
+  // Any time either of the stats changes, call processYears() to
+  // cross-refernce the stat tables for common years.
   useEffect(() => {
     if (statOneData && statTwoData) {
       processYears();
@@ -26,6 +34,8 @@ function Main() {
   const [years, setYears] = useState(null);
   const [currentYear, setCurrentYear] = useState(null);
 
+  // Any time the year is changed, call processData() to rebuild the graphData
+  // array that holds the complete data point list with all countries.
   useEffect(() => {
     if (currentYear) {
       processData();
@@ -36,16 +46,26 @@ function Main() {
   const [graphData, setGraphData] = useState(null);
   const [dataPoints, setDataPoints] = useState(null);
 
+  // This effect essentially makes a copy of the full graph data that was built
+  // by cross-referencing the two stat lists. This copy will be modified when
+  // the user selects or deselects counties in the CountryControl component.
   useEffect(() => {
     if (graphData) {
       setDataPoints(graphData.graphData);
     }
   }, [graphData]);
 
+  // State variable to show/hide the country selection control/modal
   const [show, setShow] = useState(false);
+  // State variable to show/hide the control to request a new stat
   const [showRequest, setShowRequest] = useState(false);
+  // The control for requesting a new stat is a controlled component, so
+  // its contents are held in state here.
   const [requestText, setRequestText] = useState("");
 
+  // The following two async functions are passed to the stat control
+  // components as props and call the helper functions to get the data
+  // for the stats requested.
   async function handleStatOneChange(selection) {
     setStatOne(selection);
     let data = await getData(selection.value);
@@ -62,10 +82,14 @@ function Main() {
     setCurrentYear(selection);
   }
 
+  // This function cross-references the two stat tables (by current year)
+  // and builds a single array that contains the data points only for the 
+  // countries common to both tables.
   function processData() {
     let tableOne;
     let tableTwo;
     let data = { units: { x: "", y: "" }, graphData: [] };
+    // First get the stat tables for the currently selected year
     statOneData.tables.forEach((table) => {
       if (table.year === currentYear.value) {
         tableOne = table.data;
@@ -76,8 +100,12 @@ function Main() {
         tableTwo = table.data;
       }
     });
+    // Then set the unit labels for the x and y axis
     data.units.x = statOneData.units;
     data.units.y = statTwoData.units;
+    // Then cross-refernce the tables to find countries in common and add
+    // common countries and their data points to the new table that will
+    // be used for the graph.
     tableOne.forEach((xElement) => {
       tableTwo.forEach((yElement) => {
         if (xElement.country === yElement.country) {
@@ -89,10 +117,11 @@ function Main() {
         }
       });
     });
-    //getFlags(data.graphData);
     setGraphData(data);
   }
 
+  // This function builds the list of available years that are common to the
+  // two stats selected.
   function processYears() {
     let list = [];
     statOneData.tables.forEach((tableOne) => {
@@ -103,6 +132,8 @@ function Main() {
         }
       });
     });
+    // Display an alert if there are no years in common for the selected stats
+    // and as the user to select different stats.
     if (list.length === 0) {
       alert("No matching years found. Please select different stats.");
       setCurrentYear(null);
@@ -113,6 +144,7 @@ function Main() {
     }
   }
 
+  // This function just resets everything to the app's initial state.
   function resetStats() {
     setStatOne(null);
     setStatOneData(null);
@@ -124,12 +156,14 @@ function Main() {
     setYears(null);
   }
 
+  // Allows the user to swap the axis on the graph
   function swapAxis() {
     let temp = statOne;
     handleStatOneChange(statTwo);
     handleStatTwoChange(temp);
   }
 
+  // Select two stats at random for the user.
   async function randomize() {
     resetStats();
     let randomStatOne = Math.floor(Math.random() * StatList.length);
@@ -142,6 +176,9 @@ function Main() {
     await handleStatTwoChange(StatList[randomStatTwo]);
   }
 
+  // The following functions are just used to set state variables. They
+  // are wrapped like this so that they can be passed to control components
+  // as props.
   function handleShow() {
     setShow(true);
   }
@@ -158,6 +195,8 @@ function Main() {
     setRequestText(input);
   }
 
+  // This function gets passed to the CountryControl component as a prop
+  // and handles the countries being deselected or selected by the user.
   function handleSelection(country, isSelected) {
     // If it's selected, we're going to remove that country entry
     // from the list of data points on the graph

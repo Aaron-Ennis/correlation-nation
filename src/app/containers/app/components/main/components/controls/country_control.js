@@ -1,3 +1,11 @@
+/*
+ *  Component Name:  CountryControl
+ *     Description:  This component renders the country selection list using
+ *                   the bootstap Modal component. It allows the user to
+ *                   choose which countries to include in the graph. This is a
+ *                   controlled component so most of the logic is handled in
+ *                   the Main component.
+ */
 import { Modal, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 

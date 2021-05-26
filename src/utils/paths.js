@@ -1,3 +1,6 @@
+/*
+ *  This file holds the various paths/URLs used throughout the application
+ */
 export const apiPath = "https://api.aaronennis.com/wiki-parser/";
 export const getFlagsPath = "https://api.aaronennis.com/get-flags";
 
