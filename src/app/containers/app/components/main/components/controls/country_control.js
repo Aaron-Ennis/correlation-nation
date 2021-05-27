@@ -35,7 +35,7 @@ function CountryControl(props) {
               );
               let imgSrc =
                 "https://api.aaronennis.com/flags/" +
-                element.country.replace(" ", "_") +
+                element.country.replaceAll(" ", "_") +
                 ".png";
               return (
                 <div

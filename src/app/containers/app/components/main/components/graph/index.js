@@ -29,7 +29,7 @@ function Graph(props) {
       const statTwo = payload[1];
       const imgSrc =
         "https://api.aaronennis.com/flags/" +
-        country.replace(" ", "_") +
+        country.replaceAll(" ", "_") +
         ".png";
       return (
         <div className="tooltip-custom">
