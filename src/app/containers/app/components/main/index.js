@@ -48,7 +48,7 @@ function Main() {
 
   // This effect essentially makes a copy of the full graph data that was built
   // by cross-referencing the two stat lists. This copy will be modified when
-  // the user selects or deselects counties in the CountryControl component.
+  // the user selects or deselects countries in the CountryControl component.
   useEffect(() => {
     if (graphData) {
       setDataPoints(graphData.graphData);

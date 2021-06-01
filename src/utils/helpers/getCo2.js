@@ -11,11 +11,9 @@ export async function getCo2() {
   let rawTable = response.data.tables[0];
   // First build a table for each year and push it into the tables array
   let yearRow = rawTable.rows[1].row;
-  // The years represented in the table start in the 4th column (index 3),
-  // and the last column is the percent change (which we want to exclude)
+  // The last three columns don't contain year data, so we will exclude them
   for (let i = 1; i < yearRow.length - 4; i++) {
     let newTable = {
-      // The regex below matches the four-digit year in the value field
       year: parseInt(yearRow[i].value),
       data: [],
     };

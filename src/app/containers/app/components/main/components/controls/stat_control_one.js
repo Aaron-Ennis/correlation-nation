@@ -16,8 +16,6 @@ const propTypes = {
 function StatControlOne(props) {
   const { selection, selectionChange } = props;
 
-  // Event handler that uses a control function from the parent function to
-  // keep the select field as a state variable in that parent component.
   function handleChange(selectedOption) {
     selectionChange(selectedOption);
   }

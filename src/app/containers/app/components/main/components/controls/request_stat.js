@@ -17,13 +17,10 @@ const propTypes = {
 function RequestStat(props) {
   const { requestText, onTextChange, toggleShowRequest } = props;
 
-  // Event handler that uses a control function from the parent function to
-  // keep the input field text as a state variable in that parent component.
   function handleChange(event) {
     onTextChange(event.target.value);
   }
 
-  // Use the mailto html functionality to send the request
   function submitStat() {
     let subject = encodeURIComponent("Correlation Nation Stat Request");
     let body = encodeURIComponent(requestText);

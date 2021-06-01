@@ -13,6 +13,7 @@ export async function getEvs() {
   let yearRow = rawTable.rows[0].row;
   for (let i = 1; i < yearRow.length; i++) {
     let newTable = {
+      // The regex below matches the four-digit year in the value field
       year: parseInt(yearRow[i].value.match(/\b\d{4}\b/)),
       data: [],
     };
