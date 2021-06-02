@@ -15,6 +15,7 @@ import { getData } from "../../../../../utils/getData";
 import { getFlags } from "../../../../../utils/getFlags";
 import Graph from "./components/graph";
 import { StatList } from "./components/controls/stat_list";
+import { exportData } from "../../../../../utils/exportData";
 
 function Main() {
   const [statOne, setStatOne] = useState(null);
@@ -55,17 +56,11 @@ function Main() {
     }
   }, [graphData]);
 
-  // State variable to show/hide the country selection control/modal
-  const [show, setShow] = useState(false);
-  // State variable to show/hide the control to request a new stat
+  const [showCountries, setShowCountries] = useState(false);
   const [showRequest, setShowRequest] = useState(false);
-  // The control for requesting a new stat is a controlled component, so
-  // its contents are held in state here.
+
   const [requestText, setRequestText] = useState("");
 
-  // The following two async functions are passed to the stat control
-  // components as props and call the helper functions to get the data
-  // for the stats requested.
   async function handleStatOneChange(selection) {
     setStatOne(selection);
     let data = await getData(selection.value);
@@ -83,7 +78,7 @@ function Main() {
   }
 
   // This function cross-references the two stat tables (by current year)
-  // and builds a single array that contains the data points only for the 
+  // and builds a single array that contains the data points only for the
   // countries common to both tables.
   function processData() {
     let tableOne;
@@ -176,15 +171,12 @@ function Main() {
     await handleStatTwoChange(StatList[randomStatTwo]);
   }
 
-  // The following functions are just used to set state variables. They
-  // are wrapped like this so that they can be passed to control components
-  // as props.
   function handleShow() {
-    setShow(true);
+    setShowCountries(true);
   }
 
   function handleClose() {
-    setShow(false);
+    setShowCountries(false);
   }
 
   function toggleShowRequest() {
@@ -211,6 +203,10 @@ function Main() {
       );
       setDataPoints([...dataPoints, insertCountry]);
     }
+  }
+
+  function handleExportData() {
+    exportData(statOne.label, statTwo.label, currentYear.value, graphData);
   }
 
   return (
@@ -290,16 +286,21 @@ function Main() {
           />
         )}
         {dataPoints && (
-          <Graph
-            dataPoints={dataPoints}
-            xLabel={statOne.label}
-            yLabel={statTwo.label}
-          />
+          <Fragment>
+            <Graph
+              dataPoints={dataPoints}
+              xLabel={statOne.label}
+              yLabel={statTwo.label}
+            />
+            <div className="d-flex justify-content-center m-4">
+              <Button onClick={handleExportData}>Export Data</Button>
+            </div>
+          </Fragment>
         )}
       </div>
       {graphData && dataPoints && (
         <CountryControl
-          show={show}
+          show={showCountries}
           handleClose={handleClose}
           graphData={graphData}
           selectedData={dataPoints}
